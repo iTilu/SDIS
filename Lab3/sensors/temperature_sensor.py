@@ -1,5 +1,6 @@
 """Класс сенсора температуры"""
 from typing import Optional, TYPE_CHECKING
+from datetime import datetime
 from exceptions.weather_exceptions import SensorMalfunctionException, InvalidSensorDataException
 
 if TYPE_CHECKING:
@@ -47,9 +48,14 @@ class TemperatureSensor:
     
     def calibrate(self, reference_temp: float) -> None:
         """Калибровать сенсор"""
+        if not self.is_active:
+            raise SensorMalfunctionException("Сенсор неактивен")
         if not isinstance(reference_temp, (int, float)):
             raise TypeError("Эталонная температура должна быть числом")
-        self.calibration_date = "2024-01-01"
+        if reference_temp < self.min_temp or reference_temp > self.max_temp:
+            raise InvalidSensorDataException("Температура вне допустимого диапазона")
+        self.__current_temperature = reference_temp
+        self.calibration_date = str(datetime.now().date())
     
     def get_battery_level(self) -> float:
         """Получить уровень батареи"""
@@ -77,5 +83,25 @@ class TemperatureSensor:
         return self.__current_temperature
     
     current_temperature = property(get_current_temperature)
+
+    def check_battery(self) -> None:
+        """Проверить уровень батареи"""
+        if self.battery_level < 10.0:
+            raise SensorMalfunctionException("Низкий уровень батареи")
+
+    def get_status(self) -> str:
+        """Получить статус сенсора"""
+        if not self.is_active:
+            return f"Сенсор {self.sensor_id} неактивен"
+        if self.__current_temperature is None:
+            return f"Сенсор {self.sensor_id} активен, температура не измерена"
+        return f"Сенсор {self.sensor_id} активен, температура: {self.__current_temperature}°C"
+
+    def reset(self) -> None:
+        """Сбросить сенсор"""
+        self.__current_temperature = None
+        self.calibration_date = None
+        self.battery_level = 100.0
+        self.is_active = True
 
 

@@ -9,6 +9,8 @@ def test_tape_initialization():
     assert tape.position == 0
     assert tape.read() == '_'
 
+
+def test_tape_initialization_with_data():
     tape = Tape("101")
     assert tape.tape == {0: '1', 1: '0', 2: '1'}
     assert tape.position == 0
@@ -383,3 +385,7 @@ def test_complex_program():
     steps = tm.run(max_steps=1000)
     assert tm.halted == True
     assert tm.get_status()['tape_content'] == "010101"  # Инвертированная строка
+
+
+if __name__ == "__main__":
+    pytest.main([__file__, "-v"])

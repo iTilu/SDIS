@@ -29,6 +29,8 @@ class Administrator:
     
     def add_network(self, network: 'StationNetwork') -> None:
         """Добавить сеть в управление"""
+        if network is None:
+            raise ValueError("Сеть не может быть None")
         if network not in self.__managed_networks:
             self.__managed_networks.append(network)
     
@@ -54,6 +56,14 @@ class Administrator:
             raise ValueError("Метеоролог не может быть None")
         # Администратор управляет персоналом
     
+    def revoke_access(self) -> None:
+        """Отозвать доступ"""
+        self.system_access = False
+
+    def grant_access(self) -> None:
+        """Предоставить доступ"""
+        self.system_access = True
+
     networks = property(get_networks)
 
 

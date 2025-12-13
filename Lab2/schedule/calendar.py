@@ -44,7 +44,7 @@ class Calendar:
         """Установить сезон"""
         if not isinstance(start, datetime) or not isinstance(end, datetime):
             raise TypeError("Даты должны быть объектами datetime")
-        if end < start:
+        if end <= start:
             raise ValueError("Дата окончания должна быть позже даты начала")
         self.season_start = start
         self.season_end = end

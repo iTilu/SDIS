@@ -18,7 +18,7 @@ class Accountant:
         self.name = name
         self.age = age
         self.experience_years = experience_years
-        self.salary = salary
+        self.salary = float(salary)
         self.__managed_accounts: List[str] = []
         self.certification = ""
         self.is_available = True
@@ -45,6 +45,12 @@ class Accountant:
         if not isinstance(available, bool):
             raise TypeError("Доступность должна быть булевым значением")
         self.is_available = available
+
+    def calculate_total_earnings(self, months: int) -> float:
+        """Рассчитать общий заработок бухгалтера"""
+        if not isinstance(months, int) or months < 0:
+            raise ValueError("Количество месяцев должно быть неотрицательным целым числом")
+        return self.salary * months
     
     accounts = property(get_accounts)
 

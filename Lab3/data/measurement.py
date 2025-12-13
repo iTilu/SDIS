@@ -55,7 +55,7 @@ class Measurement:
             raise ValueError("Сенсор не может быть None")
         if sensor.current_temperature is not None:
             self.value = sensor.current_temperature
-            self.set_parameter("temperature", "Celsius")
+            self.parameter_type = "temperature"
     
     def from_humidity_sensor(self, sensor: 'HumiditySensor') -> None:
         """От сенсора влажности (ассоциация с HumiditySensor)"""
@@ -63,7 +63,7 @@ class Measurement:
             raise ValueError("Сенсор не может быть None")
         if sensor.current_humidity is not None:
             self.value = sensor.current_humidity
-            self.set_parameter("humidity", "%")
+            self.parameter_type = "humidity"
     
     def from_pressure_sensor(self, sensor: 'PressureSensor') -> None:
         """От сенсора давления (ассоциация с PressureSensor)"""
@@ -71,17 +71,17 @@ class Measurement:
             raise ValueError("Сенсор не может быть None")
         if sensor.current_pressure is not None:
             self.value = sensor.current_pressure
-            self.set_parameter("pressure", "hPa")
+            self.parameter_type = "pressure"
     
     def add_to_weather_data(self, weather_data: 'WeatherData') -> None:
         """Добавить к данным о погоде (ассоциация с WeatherData)"""
         if weather_data is None:
             raise ValueError("Данные о погоде не могут быть None")
-        if self.parameter_name == "temperature":
+        if self.parameter_type == "temperature":
             weather_data.temperature = self.value
-        elif self.parameter_name == "humidity":
+        elif self.parameter_type == "humidity":
             weather_data.humidity = self.value
-        elif self.parameter_name == "pressure":
+        elif self.parameter_type == "pressure":
             weather_data.add_pressure(self.value)
 
 

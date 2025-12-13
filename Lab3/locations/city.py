@@ -39,7 +39,19 @@ class City:
         if not isinstance(elevation, (int, float)):
             raise TypeError("Высота должна быть числом")
         self.elevation = elevation
-    
+
+    def set_climate_type(self, climate: str) -> None:
+        """Установить тип климата"""
+        if not isinstance(climate, str):
+            raise TypeError("Тип климата должен быть строкой")
+        self.climate_type = climate
+
+    def get_density(self) -> float:
+        """Получить плотность населения (чел/км²)"""
+        if self.area_km2 is None or self.area_km2 <= 0:
+            raise ValueError("Площадь города не установлена или равна нулю")
+        return self.population / self.area_km2
+
     def extends_location(self, location: 'Location') -> None:
         """Расширяет локацию (ассоциация с Location)"""
         if location is None:

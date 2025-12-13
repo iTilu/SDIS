@@ -28,6 +28,7 @@ class WindAlert:
         self.gust_speed: Optional[float] = None
         self.issued_at = datetime.now()
         self.warning_level = "advisory"
+        self._update_warning_level()
     
     def set_gust_speed(self, gust: float) -> None:
         """Установить скорость порывов"""

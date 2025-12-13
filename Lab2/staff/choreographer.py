@@ -50,6 +50,10 @@ class Choreographer:
         if not isinstance(available, bool):
             raise TypeError("Доступность должна быть булевым значением")
         self.is_available = available
-    
+
+    def calculate_monthly_earnings(self) -> float:
+        """Рассчитать месячный заработок"""
+        return self.salary
+
     choreographies = property(get_choreographies)
 

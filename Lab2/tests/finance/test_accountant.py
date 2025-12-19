@@ -294,3 +294,4 @@ def test_accountant_experience_levels():
     assert junior.calculate_total_earnings(12) == 540000.0
     assert senior.calculate_total_earnings(12) == 1440000.0
     assert veteran.calculate_total_earnings(12) == 1800000.0
+
